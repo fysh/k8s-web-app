@@ -7,3 +7,4 @@ Test web-app with red,green,blue background
 Environment args:
 
 APP_COLOR: red ( or green, or blue )  - default green
+MESSAGE: display message in index.html

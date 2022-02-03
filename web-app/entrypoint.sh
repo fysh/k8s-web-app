@@ -1,16 +1,12 @@
 #!/usr/bin/env sh
 
-APP_COLOR=${APP_COLOR:-green}
+MESSAGE=${MESSAGE:-"Default web server"}
+APP_COLOR=${APP_COLOR:-white}
 BASE_DIR=/usr/share/nginx/html
 
-if [[ ${APP_COLOR} = "red" ]]
-then
-    cp ${BASE_DIR}/index-red.html ${BASE_DIR}/index.html
-elif [[ ${APP_COLOR} = "blue" ]]
-then
-    cp ${BASE_DIR}/index-blue.html ${BASE_DIR}/index.html
-else
-    cp ${BASE_DIR}/index-green.html ${BASE_DIR}/index.html
-fi
+export MESSAGE
+export APP_COLOR
+
+envsubst < ${BASE_DIR}/index.html.tpl > ${BASE_DIR}/index.html
 
 exec /usr/sbin/nginx -g 'daemon off;'
