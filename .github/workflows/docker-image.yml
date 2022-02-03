@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get sources
+      uses: actions/checkout@v2
+
+    - name: Login to DockerHub Registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Buildx install
+      run: docker buildx create --use
+
+    - name: Build the web-app docker image
+      run: cd web-app && docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x --tag ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest -f Dockerfile  . --push
