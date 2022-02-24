@@ -12,7 +12,7 @@ on:
       - completed
 
 jobs:
-  build:
+  aduit:
     runs-on: ubuntu-latest
 
     - uses: azure/container-scan@v0
