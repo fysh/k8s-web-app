@@ -20,4 +20,7 @@ jobs:
       run: docker buildx create --use
 
     - name: Build the web-app docker image
-      run: cd web-app && docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x --tag ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest -f Dockerfile  . --push
+      run: |
+        export DOCKER_CONTENT_TRUST=1
+        docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x --tag ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest -f Dockerfile  . --push
+      working-directory: web-app

@@ -10,6 +10,11 @@ COPY ./contents/www /usr/share/nginx/html/
 
 WORKDIR /usr/share/nginx/html/
 
+RUN addgroup -g 1001 -S www
+RUN adduser -S ww -u 1001
+
+USER www
+
 EXPOSE 80
 
 CMD ["/entrypoint.sh"]
