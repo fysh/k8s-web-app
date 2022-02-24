@@ -14,7 +14,7 @@ on:
 jobs:
   aduit:
     runs-on: ubuntu-latest
-
+    steps:
     - uses: azure/container-scan@v0
       with:
         image-name: ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest
