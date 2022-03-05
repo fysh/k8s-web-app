@@ -11,6 +11,10 @@ jobs:
   aduit:
     runs-on: ubuntu-latest
     steps:
+    - name: Extract Pipeline Variables
+      run: |
+        echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')" >> $GITHUB_ENV
+
     - uses: azure/container-scan@v0
       with:
-        image-name: ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest
+        image-name: ${{ secrets.DOCKERHUB_USERNAME }}/web-app:${{ env.BRANCH_NAME }}

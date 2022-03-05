@@ -13,6 +13,10 @@ jobs:
     - name: Get sources
       uses: actions/checkout@v2
 
+    - name: Extract branch_name
+      run: |
+        echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')" >> $GITHUB_ENV
+
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
@@ -21,6 +25,5 @@ jobs:
 
     - name: Build the web-app docker image
       run: |
-        export DOCKER_CONTENT_TRUST=1
-        docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x --tag ${{ secrets.DOCKERHUB_USERNAME }}/web-app:latest -f Dockerfile  . --push
+        docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x --tag ${{ secrets.DOCKERHUB_USERNAME }}/web-app:${{ env.BRANCH_NAME }} -f Dockerfile  . --push
       working-directory: web-app

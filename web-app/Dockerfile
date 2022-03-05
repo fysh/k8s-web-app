@@ -2,7 +2,7 @@ FROM nginx:stable-alpine-perl as NGINX
 
 LABEL maintainer="john.fysh"
 
-RUN apk add --no-cache gettext
+RUN apk add --no-cache gettext curl
 
 COPY ./entrypoint.sh /
 
