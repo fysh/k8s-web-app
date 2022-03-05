@@ -17,6 +17,8 @@ USER www
 
 EXPOSE 80
 
-CMD ["/entrypoint.sh"]
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
+
+CMD ["/entrypoint.sh"] || exit 1
 
 
